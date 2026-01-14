@@ -1,0 +1,23 @@
+sudo dpkg -i splunk-9.2.0.1-abcdef1234-linux-2.6-amd64.deb
+sudo apt-get install -f
+cd /opt/splunk/bin
+sudo ./splunk start
+add reciver port 9997
+add index wineventlog
+
+
+
+
+sudo apt update
+sudo apt install curl -y
+sudo dpkg -i splunkforwarder-9.4.2-e9664af3d956-linux-amd64.deb
+
+sudo dpkg --remove --force-remove-reinstreq splunk
+
+
+sudo /opt/splunkforwarder/bin/splunk start --accept-license
+sudo /opt/splunkforwarder/bin/splunk add forward-server <indexer-ip>:9997 -auth splunk:<your-password>
+sudo /opt/splunkforwarder/bin/splunk add monitor /var/log -auth splunk:<your-password>
+sudo /opt/splunkforwarder/bin/splunk list forward-server
+sudo /opt/splunkforwarder/bin/splunk restart
+
